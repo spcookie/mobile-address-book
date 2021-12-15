@@ -1,26 +1,13 @@
 [
   {
-    "id": "0",
-    "label": "C",
-    "name": "陈宏博",
-    "pinYin": "Cheng-Hong-Bo",
-    "phone": "1008611",
-    "address": "重庆理工大学"
-  },
-  {
-    "id": "1",
-    "label": "L",
-    "name": "刘伟翔",
-    "pinYin": "Liu-Wei-Xiang",
-    "phone": "17302334973",
-    "address": "重庆理工大学"
-  },
-  {
-    "id": "2",
-    "label": "L",
-    "name": "李白",
-    "pinYin": "Li-Bao",
-    "phone": "17302334973",
+    "id": "000",
+    "label": "D",
+    "name": "Demo",
+    "pinYin": "demo",
+    "phone": [
+      "123456",
+      "456789"
+    ],
     "address": "重庆理工大学"
   }
 ]
