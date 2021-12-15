@@ -1,0 +1,22 @@
+.panel {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.panel .save, .panel .modify, .panel .delete {
+  display: none;
+}
+.panel button {
+  width: 130px;
+  height: 130px;
+  font-size: 60px;
+  background-color: pink;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+}
+
+/*# sourceMappingURL=panel.css.map */

@@ -1,0 +1,55 @@
+.panel {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(105, 68, 68, 0.75);
+
+  > div:nth-last-of-type(n + 2) {
+    margin: auto;
+    width: fit-content;
+    text-align: center;
+
+    label {
+      font-size: 60px;
+      color: #fce0e0;
+
+      span {
+        display:inline-block;
+        width: 180px;
+      }
+
+      input {
+        margin: 30px 0;
+        width: 70%;
+        height: 100px;
+        font-size: inherit;
+        outline: none;
+        border-radius: 30px;
+        background-color: rgba(203, 203, 203, 0.87);
+      }
+    }
+  }
+
+  .save, .modify, .delete {
+    display: none;
+  }
+
+  button {
+    width: 130px;
+    height: 130px;
+    font-size: 60px;
+    background-color: pink;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+  }
+}
+
+.flex {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

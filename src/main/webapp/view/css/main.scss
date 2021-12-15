@@ -1,0 +1,134 @@
+@import "init";
+@import "panel";
+
+#bg {
+  position: relative;
+  background: {
+    image: url("../../img/bg.jpg");
+    size: cover;
+  }
+  overflow: auto;
+
+  .group {
+    > li {
+      margin-bottom: 20px;
+      border-bottom: white solid 4px;
+      font-size: 60px;
+      color: white;
+
+      .item {
+        li {
+          margin: 20px 0;
+
+          &:hover {
+            background-color: #6e6e6e;
+          }
+        }
+      }
+    }
+  }
+}
+
+#nav {
+  position: fixed;
+  top: 190px;
+  right: 16px;
+  background-color: rgba(174, 174, 174, 0.51);
+
+  $fillet: 50px;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -$fillet;
+    width: 100%;
+    height: $fillet;
+    border-radius: 0 0 $fillet $fillet;
+    background-color: inherit;
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -$fillet;
+    width: 100%;
+    height: $fillet;
+    border-radius: $fillet $fillet 0 0;
+    background-color: inherit;
+  }
+
+  ul {
+    padding: 0 10px;
+
+    li {
+      width: 50px;
+      height: 50px;
+      font-size: 40px;
+      text-align: center;
+      border-radius: 50%;
+    }
+  }
+}
+
+.mask {
+  min-height: 180vh;
+  background-color: rgba(251, 130, 130, 0.09);
+}
+
+#add-button {
+  position: fixed;
+  bottom: 5%;
+  right: 12%;
+
+  button {
+    width: 130px;
+    height: 130px;
+    font-size: 60px;
+    background-color: pink;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+  }
+}
+
+.queryBox {
+  position: sticky;
+  top: 0;
+  left: 0;
+
+  input {
+    width: 100vh;
+    height: 120px;
+    font-size: 60px;
+    color: #ffebeb;
+    background-color: rgba(105, 105, 105, 0.9);
+  }
+
+  #result {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    background-color: rgba(105, 105, 105, 0.89);
+    z-index: 999;
+
+    > li {
+      margin-bottom: 30px;
+
+      p {
+        width: 100vh;
+        background-color: transparent;
+
+        &:first-of-type {
+          padding-bottom: 6px;
+          font-size: 60px;
+        }
+
+        &:last-of-type {
+          font-size: 40px;
+        }
+      }
+    }
+  }
+}

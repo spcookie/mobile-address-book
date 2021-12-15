@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通讯录</title>
+    <link rel="stylesheet" href="./view/css/main.css">
+    <script async src="./lib/jquery.min.js"></script>
+    <script type="module" src="./view/js/main.js"></script>
+</head>
+<body>
+<div id="bg">
+    <div class="mask">
+        <div class="queryBox">
+            <label>
+                <input type="text" name="query" placeholder="搜索">
+            </label>
+            <ul id="result">
+                <!--                <li>-->
+                <!--                    <p class="title"></p>-->
+                <!--                    <p class="additional"></p>-->
+                <!--                </li>-->
+            </ul>
+        </div>
+        <ul class="group">
+            <!--                <li>-->
+            <!--                    <div>L</div>-->
+            <!--                    <ul class="item">-->
+            <!--                        <li></li>-->
+            <!--                        <li></li>-->
+            <!--                    </ul>-->
+            <!--                </li>-->
+        </ul>
+    </div>
+    <div id="nav">
+        <ul>
+            <li>A</li>
+            <li>B</li>
+            <li>C</li>
+            <li>D</li>
+            <li>E</li>
+            <li>F</li>
+            <li>G</li>
+            <li>H</li>
+            <li>I</li>
+            <li>J</li>
+            <li>K</li>
+            <li>L</li>
+            <li>M</li>
+            <li>N</li>
+            <li>O</li>
+            <li>P</li>
+            <li>O</li>
+            <li>R</li>
+            <li>S</li>
+            <li>T</li>
+            <li>U</li>
+            <li>V</li>
+            <li>W</li>
+            <li>X</li>
+            <li>Y</li>
+            <li>Z</li>
+            <li>#</li>
+        </ul>
+    </div>
+    <div id="add-button">
+        <button>加</button>
+    </div>
+    <div class="panel">
+        <div>
+            <label>
+                <span>姓名：</span>
+                <input type="text" name="name">
+            </label>
+        </div>
+        <div>
+            <label class="phone-box">
+                <span>号码：</span>
+                <input type="number" name="phone">
+            </label>
+            <div>
+                <button class="add-phone">+</button>
+            </div>
+        </div>
+        <div>
+            <label>
+                <span>地址：</span>
+                <input type="text" name="address">
+            </label>
+        </div>
+        <div class="flex">
+            <button class="save">保存</button>
+            <button class="modify">修改</button>
+            <button class="delete">删除</button>
+            <button class="return">返回</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
