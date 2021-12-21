@@ -19,10 +19,17 @@ function load() {
         labelWidth = labelInfo.labelWidth
         //nav选中
         let $nav = $('#nav li')
-        $nav.css('background-color', '')
+        $nav.css({
+            backgroundColor: '',
+            color: 'black'
+        })
         for (const key of labelMap.keys()) {
             let index = key.charCodeAt() - 65
-            $nav.eq(index).css('background-color', 'rgb(180, 80, 98)')
+            index = index >= 0 ? index : 26
+            $nav.eq(index).css({
+                backgroundColor: 'rgba(41, 41, 41, 0.85)',
+                color: 'white'
+            })
             break
         }
     })
@@ -31,26 +38,38 @@ function load() {
 load()
 
 function creatDom() {
-    console.log(users)
     group = $('.group')
     group.empty()
+    let isSpecial = false
     for (let k in users) {
-        const li = document.createElement('li')
-        const div = document.createElement('div')
-        const ul = document.createElement('ul')
-        ul.classList.add('item')
-        div.innerText = k
-        let i = 0
-        for (let o of users[k]) {
-            const item = document.createElement('li')
-            item.innerText = o.name
-            item.setAttribute("identification", `${k}-${i}`)
-            ul.append(item)
-            i++
+        if (k === '#') {
+            isSpecial = true
+            continue
         }
-        li.append(div, ul)
-        group.append(li)
+        loadLabelItem(k)
     }
+    if (isSpecial) {
+        loadLabelItem('#')
+    }
+    console.log('load ->', users)
+}
+
+function loadLabelItem(k) {
+    const li = document.createElement('li')
+    const div = document.createElement('div')
+    const ul = document.createElement('ul')
+    ul.classList.add('item')
+    div.innerText = k
+    let i = 0
+    for (let o of users[k]) {
+        const item = document.createElement('li')
+        item.innerText = o.name
+        item.setAttribute("identification", `${k}-${i}`)
+        ul.append(item)
+        i++
+    }
+    li.append(div, ul)
+    group.append(li)
 }
 
 function getLabelMap() {
@@ -65,14 +84,12 @@ function getLabelMap() {
         accumulation += w
         labelMap.set(letter, accumulation)
     })
-    // console.log(map)
     return {labelMap, labelWidth}
 }
 
 function itemClick() {
     $('.item > li').click(function () {
         let id = $(this).attr('identification')
-        console.log(id)
         showDetail(id)
     })
 }
@@ -83,27 +100,31 @@ $('#add-button > button').click(() => {
     form.find('.save').css('display', 'block')
 })
 
-$('.queryBox').find('input').on('input propertychange', function () {
+const $queryBox = $('.queryBox').find('input')
+const $ul = $('#result')
+
+$queryBox.on('input propertychange', function () {
     let val = $(this).val()
-    // console.log(val)
-    const ul = $('#result')
-    ul.empty()
+    $ul.hide().empty()
     if (val !== '') {
         let ch = val.charAt(0)
         //汉字unicode范围 ->	4E00-9FA5
         if (/[\u4e00-\u9fa5|0-9]/.test(ch)) {
             Api.findData(val, (resp) => {
-                // console.log(resp)
                 if (resp != null) {
                     for (let e of resp) {
                         let lis = createQueryItem(e)
-                        ul.append(lis)
+                        $ul.append(lis)
                     }
-                    $(ul).slideDown(1000)
+                    $ul.slideDown(200)
                 }
             })
         }
     }
+})
+
+$queryBox.focusout(() => {
+    $ul.slideUp(200)
 })
 
 function createQueryItem({name, phone}) {

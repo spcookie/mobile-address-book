@@ -1,0 +1,58 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "680697",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e6fa",
+      "unicode_decimal": 59130
+    },
+    {
+      "icon_id": "2892818",
+      "name": "删除",
+      "font_class": "changyonggoupiaorenshanchu",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "4511968",
+      "name": "增加",
+      "font_class": "zengjia",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "5979979",
+      "name": "返回",
+      "font_class": "fanhui",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "8626141",
+      "name": "保存",
+      "font_class": "baocun",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "8765143",
+      "name": "增加",
+      "font_class": "zengjia1",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "16563867",
+      "name": "修改、修改资料",
+      "font_class": "cangpeitubiao_xiugaixiugaiziliao",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    }
+  ]
+}

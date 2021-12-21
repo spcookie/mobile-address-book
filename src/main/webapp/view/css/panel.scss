@@ -1,3 +1,5 @@
+@import "init";
+
 .panel {
   display: none;
   position: fixed;
@@ -5,30 +7,42 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(105, 68, 68, 0.75);
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
 
   > div:nth-last-of-type(n + 2) {
-    margin: auto;
-    width: fit-content;
-    text-align: center;
+    width: 900px;
 
     label {
       font-size: 60px;
       color: #fce0e0;
 
       span {
-        display:inline-block;
+        display: block;
+        margin-bottom: 20px;
         width: 180px;
+        font-size: 40px;
       }
 
       input {
-        margin: 30px 0;
+        display: inline-block;
         width: 70%;
         height: 100px;
-        font-size: inherit;
-        outline: none;
+        margin-bottom: 30px;
+        padding: 0 15px;
+        border: 6px solid #dcdfe6;
         border-radius: 30px;
-        background-color: rgba(203, 203, 203, 0.87);
+        outline: none;
+        color: #606266;
+        font-size: inherit;
+        line-height: 40px;
+        background-color: #fff;
+        transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+
+        &:focus {
+          border-color: #1196ff;
+        }
       }
     }
   }
@@ -37,14 +51,39 @@
     display: none;
   }
 
-  button {
-    width: 130px;
-    height: 130px;
-    font-size: 60px;
-    background-color: pink;
-    border: none;
-    border-radius: 50%;
-    outline: none;
+  .phone-panel {
+    position: relative;
+    top: 0;
+    left: 0;
+
+    .add-phone {
+      position: absolute;
+      top: 76px;
+      right: 5%;
+      width: fit-content;
+
+      button {
+        width: 90px;
+        height: 90px;
+        font-size: 40px;
+        background-color: #00000069;
+        border: none;
+        border-radius: 50%;
+        outline: none;
+        color: white;
+
+        &:last-of-type {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .operation-list {
+
+    button {
+      @include simple-button(60px);
+    }
   }
 }
 

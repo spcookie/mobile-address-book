@@ -3,6 +3,7 @@ package com.cqut.addressBook.server;
 import com.cqut.addressBook.dto.MessageDto;
 import com.cqut.addressBook.entity.User;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import java.util.Map;
  * @date 2021/12/5
  */
 public interface BookServer {
-    Map<Character, List<User>> getBook();
+    Map<Character, LinkedList<User>> getBook();
     MessageDto addBook(User user);
     MessageDto modifyUsers(User user);
     MessageDto deleteUser(Long id);

@@ -34,7 +34,12 @@ public class User implements Comparable<User>{
 
     public void setPinYin(String pinYin) {
         this.pinYin = pinYin;
-        this.label = pinYin.charAt(0);
+        char ch = pinYin.charAt(0);
+        if (!('A' <= ch && ch <= 'Z')) {
+            this.label = '#';
+        } else {
+            this.label = ch;
+        }
     }
 
     public String getName() {

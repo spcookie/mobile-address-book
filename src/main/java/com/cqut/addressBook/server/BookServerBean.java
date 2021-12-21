@@ -16,8 +16,10 @@ public class BookServerBean implements BookServer {
     private final BookDao bookDao = new BookDao();
 
     @Override
-    public Map<Character, List<User>> getBook() {
-        return bookDao.getUsersForLabelMap();
+    public Map<Character, LinkedList<User>> getBook() {
+        Map<Character,LinkedList<User>> map = bookDao.getUsersForLabelMap();
+        System.out.println("label-map -> " + map);
+        return map;
     }
 
     @Override
@@ -55,8 +57,16 @@ public class BookServerBean implements BookServer {
     public List<User> fuzzyQuery(String query) {
         if (query != null) {
             int type = query.charAt(0);
-            if ('0' < type && type < '9') {
-                return bookDao.findUserWithPhone(query);
+            if ('0' <= type && type <= '9') {
+                int length = 11 - query.length();
+                if (length >= 0) {
+                    String buffer = query + "0".repeat(length);
+                    long lower = Long.parseLong(buffer);
+                    buffer = Long.parseLong(query) + 1 + "0".repeat(length);
+                    long higher = Long.parseLong(buffer);
+                    return bookDao.findUserWithPhone(lower, higher);
+                }
+                return null;
             } else {
                 return bookDao.findUserWithName(query);
             }

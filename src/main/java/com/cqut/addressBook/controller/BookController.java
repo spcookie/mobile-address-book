@@ -8,6 +8,7 @@ import com.cqut.addressBook.server.BookServer;
 import com.cqut.addressBook.server.BookServerBean;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class BookController extends BaseServlet {
     private final BookServer bookServerBean = new BookServerBean();
 
     @Api(name = "/getUsers")
-    public Map<Character, List<User>> getUsers() {
+    public Map<Character, LinkedList<User>> getUsers() {
         return bookServerBean.getBook();
     }
 

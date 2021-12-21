@@ -7,6 +7,7 @@ package com.cqut.addressBook.constant;
 public enum BookConstant {
     USERS_LIST("users"),
     BOOK_MAP("bookMap"),
+    PHONE_MAP("phoneMap"),
     RESOURCE_PATH("data/book.json");
 
     private final String value;

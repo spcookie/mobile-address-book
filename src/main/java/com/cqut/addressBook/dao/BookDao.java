@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Augenstern
@@ -28,18 +29,18 @@ public class BookDao extends BaseDao {
         return (List<User>) httpSession.getAttribute(BookConstant.USERS_LIST.val());
     }
 
-    public Map<Character, List<User>> getUsersForLabelMap() {
+    public Map<Character, LinkedList<User>> getUsersForLabelMap() {
         HttpSession httpSession = SessionUtil.get();
         if (httpSession.getAttribute(BookConstant.BOOK_MAP.val()) == null) {
             List<User> users = this.getUsers();
-            HashMap<Character, List<User>> usersMap = new HashMap<>(26);
+            HashMap<Character, LinkedList<User>> usersMap = new HashMap<>(26);
             users.forEach((user) -> {
                 Character label = user.getLabel();
-                List<User> list;
+                LinkedList<User> list;
                 if (usersMap.containsKey(label)) {
                     list = usersMap.get(label);
                 } else {
-                    list = new ArrayList<>();
+                    list = new LinkedList<>();
                     usersMap.put(label, list);
                 }
                 list.add(user);
@@ -47,25 +48,70 @@ public class BookDao extends BaseDao {
             });
             httpSession.setAttribute(BookConstant.BOOK_MAP.val(), usersMap);
         }
-        return (Map<Character, List<User>>) httpSession.getAttribute(BookConstant.BOOK_MAP.val());
+        return (Map<Character, LinkedList<User>>) httpSession.getAttribute(BookConstant.BOOK_MAP.val());
+    }
+
+    public TreeMap<Long, User> getUsersForPhone() {
+        HttpSession httpSession = SessionUtil.get();
+        if (httpSession.getAttribute(BookConstant.PHONE_MAP.val()) == null) {
+            List<User> users = this.getUsers();
+            TreeMap<Long, User> map = new TreeMap<>();
+            users.forEach((val) -> {
+                ArrayList<String> phone = val.getPhone();
+                for (String s : phone) {
+                    map.put(Long.parseLong(s), val);
+                }
+            });
+            httpSession.setAttribute(BookConstant.PHONE_MAP.val(), map);
+        }
+        return (TreeMap<Long, User>) httpSession.getAttribute(BookConstant.PHONE_MAP.val());
     }
 
     public Boolean addUser(User user) {
         System.out.println("add: " + user);
         List<User> users = this.getUsers();
         users.add(user);
-        Map<Character, List<User>> map = this.getUsersForLabelMap();
+        Map<Character, LinkedList<User>> map = this.getUsersForLabelMap();
         List<User> lu = map.computeIfAbsent(user.getLabel(), k -> new LinkedList<>());
         lu.add(user);
         Collections.sort(lu);
+        TreeMap<Long, User> forPhone = this.getUsersForPhone();
+        user.getPhone().forEach((val) -> forPhone.put(Long.valueOf(val), user));
         return this.save();
     }
 
     public Boolean modifyUsers(User user) {
         int index = this.findUser(user.getId());
-        List<User> users = this.getUsers();
         if (index != -1) {
-            users.set(index, user);
+            List<User> users = this.getUsers();
+            User set = users.get(index);
+            if (!set.getName().equals(user.getName())) {
+                set.setName(user.getName());
+                Map<Character, LinkedList<User>> labelMap = this.getUsersForLabelMap();
+                LinkedList<User> labelUsers = labelMap.get(set.getLabel());
+                labelUsers.remove(set);
+                labelUsers.add(user);
+                Collections.sort(labelUsers);
+            }
+            ArrayList<String> newPhone = user.getPhone();
+            ArrayList<String> oldPhone = set.getPhone();
+            if (!oldPhone.equals(newPhone)) {
+                ArrayList<String> clone = (ArrayList<String>) oldPhone.clone();
+                TreeMap<Long, User> forPhone = this.getUsersForPhone();
+                oldPhone.retainAll(newPhone);
+                clone.removeAll(oldPhone);
+                newPhone.removeAll(oldPhone);
+                for (String s : clone) {
+                    forPhone.remove(Long.parseLong(s));
+                }
+                for (String s : newPhone) {
+                    forPhone.put(Long.parseLong(s), set);
+                    oldPhone.add(s);
+                }
+            }
+            if (!set.getAddress().equals(user.getAddress())) {
+                set.setAddress(user.getAddress());
+            }
             this.save();
             return true;
         }
@@ -95,12 +141,14 @@ public class BookDao extends BaseDao {
         if (index != -1) {
             User removeUser = users.remove(index);
             System.out.println("delete: " + removeUser);
-            Map<Character, List<User>> usersForLabelMap = this.getUsersForLabelMap();
+            Map<Character, LinkedList<User>> usersForLabelMap = this.getUsersForLabelMap();
             List<User> list = usersForLabelMap.get(removeUser.getLabel());
             list.remove(removeUser);
             if  (list.isEmpty()) {
                 usersForLabelMap.remove(removeUser.getLabel());
             }
+            TreeMap<Long, User> usersForPhone = this.getUsersForPhone();
+            removeUser.getPhone().forEach((phone) -> usersForPhone.remove(Long.parseLong(phone)));
             this.save();
             return true;
         }
@@ -122,19 +170,16 @@ public class BookDao extends BaseDao {
         return users;
     }
 
-    //TODO:待优化查询效率
-    public List<User> findUserWithPhone(String num) {
+    public List<User> findUserWithPhone(Long lower, Long higher) {
         List<User> users = new ArrayList<>();
-        this.getUsers().forEach((val) -> {
-            ArrayList<String> phone = val.getPhone();
-            for (String s : phone) {
-                if (s.startsWith(num)) {
-                    users.add(val);
-                    break;
-                }
-            }
-        });
-        return users;
+        TreeMap<Long, User> usersForPhone = this.getUsersForPhone();
+        System.out.println("phone-map -> " + usersForPhone);
+        Long key = usersForPhone.ceilingKey(lower);
+        if (key != null && key <= higher) {
+            SortedMap<Long, User> tailMap = usersForPhone.tailMap(key);
+            tailMap.forEach((integer, user) -> users.add(user));
+        }
+        return users.stream().distinct().collect(Collectors.toList());
     }
 
     public Boolean save() {

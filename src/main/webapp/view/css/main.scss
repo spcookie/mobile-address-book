@@ -16,12 +16,22 @@
       font-size: 60px;
       color: white;
 
+      > div {
+        position: sticky;
+        top: 120px;
+        left: 0;
+        width: 98%;
+        backdrop-filter: blur(6px);
+      }
+
       .item {
+        padding-left: 16px;
+
         li {
           margin: 20px 0;
 
           &:hover {
-            background-color: #6e6e6e;
+            background-color: #68686852;
           }
         }
       }
@@ -33,7 +43,8 @@
   position: fixed;
   top: 190px;
   right: 16px;
-  background-color: rgba(174, 174, 174, 0.51);
+  background-color: #00000069;
+  color: black;
 
   $fillet: 50px;
 
@@ -83,13 +94,7 @@
   right: 12%;
 
   button {
-    width: 130px;
-    height: 130px;
-    font-size: 60px;
-    background-color: pink;
-    border: none;
-    border-radius: 50%;
-    outline: none;
+    @include simple-button(70px);
   }
 }
 
@@ -97,21 +102,34 @@
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 999;
 
-  input {
-    width: 100vh;
+  label {
+    display: block;
+    backdrop-filter: blur(4px);
     height: 120px;
-    font-size: 60px;
-    color: #ffebeb;
-    background-color: rgba(105, 105, 105, 0.9);
+
+    input {
+      width: 100%;
+      height: 120px;
+      padding: 0 30px;
+      border-radius: 60px;
+      font-size: 60px;
+      color: #ffebeb;
+      background-color: rgba(0, 0, 0, 0.42);
+
+      &:focus {
+        background-color: rgba(41, 41, 41, 0.85);
+      }
+    }
   }
 
   #result {
     position: absolute;
     top: 120px;
     left: 0;
-    background-color: rgba(105, 105, 105, 0.89);
-    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.62);
+    backdrop-filter: blur(16px);
 
     > li {
       margin-bottom: 30px;
@@ -119,6 +137,7 @@
       p {
         width: 100vh;
         background-color: transparent;
+        color: white;
 
         &:first-of-type {
           padding-bottom: 6px;
@@ -131,4 +150,21 @@
       }
     }
   }
+}
+
+.message {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 100px;
+  min-width: 50%;
+  max-width: 90%;
+  border-radius: 30px;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  line-height: 90px;
+  z-index: 9999;
 }
