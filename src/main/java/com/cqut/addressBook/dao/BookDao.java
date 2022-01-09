@@ -177,7 +177,11 @@ public class BookDao extends BaseDao {
         Long key = usersForPhone.ceilingKey(lower);
         if (key != null && key <= higher) {
             SortedMap<Long, User> tailMap = usersForPhone.tailMap(key);
-            tailMap.forEach((integer, user) -> users.add(user));
+            tailMap.forEach((integer, user) -> {
+                if (integer < higher) {
+                    users.add(user);
+                }
+            });
         }
         return users.stream().distinct().collect(Collectors.toList());
     }

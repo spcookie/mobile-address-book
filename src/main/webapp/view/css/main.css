@@ -62,6 +62,7 @@ input::-webkit-input-placeholder {
   padding: 30px;
   background-color: rgba(0, 0, 0, 0.34);
   backdrop-filter: blur(16px);
+  z-index: 999;
 }
 .panel > div:nth-last-of-type(n + 2) {
   width: 900px;
@@ -230,7 +231,7 @@ input::-webkit-input-placeholder {
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 99;
 }
 .queryBox label {
   display: block;
